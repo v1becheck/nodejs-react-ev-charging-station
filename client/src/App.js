@@ -90,9 +90,59 @@ function App() {
     return `${hh}:${mm}:${ss}`;
   }
 
+  function getActiveReservationForCharger(chargerId) {
+    return reservations.find(
+      (res) => res.chargerId === chargerId && res.status === 'active'
+    );
+  }
+
+  function getStatusClasses(type, status) {
+    const base = 'font-bold ';
+    if (type === 'reservation') {
+      switch (status) {
+        case 'queued':
+          return `${base} text-yellow-500`;
+        case 'active':
+          return `${base} text-green-500`;
+        case 'completed':
+          return `${base} text-blue-500`;
+        case 'cancelled':
+          return `${base} text-red-500`;
+        default:
+          return `${base} text-gray-400`;
+      }
+    } else {
+      // Charger statuses: available, in_use, unavailable
+      switch (status) {
+        case 'available':
+          return `${base} text-green-600`;
+        case 'in_use':
+          return `${base} text-yellow-600`;
+        case 'unavailable':
+          return `${base} text-red-600`;
+        default:
+          return `${base} text-gray-400`;
+      }
+    }
+  }
+
   const handleCreateReservation = () => {
     if (!userId) {
       showAlert('Please enter a valid User ID!', 'Validation Error');
+      return;
+    }
+
+    const existingRes = reservations.find(
+      (res) =>
+        res.userId === parseInt(userId, 10) &&
+        (res.status === 'queued' || res.status === 'active')
+    );
+
+    if (existingRes) {
+      showAlert(
+        'User already has a pending or active reservation. Cannot create another!',
+        'Duplicate Reservation'
+      );
       return;
     }
 
@@ -169,42 +219,6 @@ function App() {
       })
       .catch((err) => showAlert(err.message, 'Error'));
   };
-
-  function getActiveReservationForCharger(chargerId) {
-    return reservations.find(
-      (res) => res.chargerId === chargerId && res.status === 'active'
-    );
-  }
-
-  function getStatusClasses(type, status) {
-    const base = 'font-bold ';
-    if (type === 'reservation') {
-      switch (status) {
-        case 'queued':
-          return `${base} text-yellow-500`;
-        case 'active':
-          return `${base} text-green-500`;
-        case 'completed':
-          return `${base} text-blue-500`;
-        case 'cancelled':
-          return `${base} text-red-500`;
-        default:
-          return `${base} text-gray-400`;
-      }
-    } else {
-      // Charger statuses: available, in_use, unavailable
-      switch (status) {
-        case 'available':
-          return `${base} text-green-600`;
-        case 'in_use':
-          return `${base} text-yellow-600`;
-        case 'unavailable':
-          return `${base} text-red-600`;
-        default:
-          return `${base} text-gray-400`;
-      }
-    }
-  }
 
   return (
     <div className='min-h-screen bg-gray-100 text-gray-800 p-4'>
