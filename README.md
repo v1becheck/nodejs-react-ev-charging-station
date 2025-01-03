@@ -23,7 +23,7 @@ Start Frontend:
 # How to use:
 
 - Check "User" section for available user ids
-- Use user id in the "Create New Reservation" section to queue new user for charging
+- Use user id (Numbers 1-5) in the "Create New Reservation" section to queue new user for charging
 - In the "Reservations" section, use buttons to "Start", "Complete" or "Cancel" reservation
 - Use "Chargers" section to check for "in use" or "available" chargers and the time spent charging
 
