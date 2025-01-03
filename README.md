@@ -39,4 +39,6 @@ Start Frontend:
 
 # Deployed
 
-< link >
+Use the following link to check the app if you don't want to start it locally:
+
+Deploted to Railway: [EV Charging System App](https://nodejs-react-ev-charging-station-production-abd5.up.railway.app/)
