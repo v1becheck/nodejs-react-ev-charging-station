@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 
 function App() {
   const [chargers, setChargers] = useState([]);
@@ -44,26 +44,26 @@ function App() {
 
   const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:3001';
 
-  const fetchChargers = () => {
+  const fetchChargers = useCallback(() => {
     fetch(`${API_URL}/api/chargers`)
       .then((res) => res.json())
       .then((data) => setChargers(data))
       .catch((err) => console.error(err));
-  };
+  }, [API_URL]);
 
-  const fetchReservations = () => {
+  const fetchReservations = useCallback(() => {
     fetch(`${API_URL}/api/reservations`)
       .then((res) => res.json())
       .then((data) => setReservations(data))
       .catch((err) => console.error(err));
-  };
+  }, [API_URL]);
 
-  const fetchUsers = () => {
+  const fetchUsers = useCallback(() => {
     fetch(`${API_URL}/api/users`)
       .then((res) => res.json())
       .then((data) => setUsers(data))
       .catch((err) => console.error(err));
-  };
+  }, [API_URL]);
 
   useEffect(() => {
     fetchChargers();
@@ -75,7 +75,7 @@ function App() {
     }, 1000);
 
     return () => clearInterval(interval);
-  }, [API_URL]);
+  }, [API_URL, fetchChargers, fetchReservations, fetchUsers]);
 
   function formatTime(ms) {
     if (ms < 0) ms = 0;
