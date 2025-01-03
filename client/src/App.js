@@ -37,28 +37,29 @@ function App() {
   const dismissModal = () => {
     clearTimeout(fadeOutTimeout);
     clearTimeout(removeTimeout);
-
     setAlertMsg('');
     setAlertTitle('');
     setIsFading(false);
   };
 
+  const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:3001';
+
   const fetchChargers = () => {
-    fetch('http://localhost:3001/api/chargers')
+    fetch(`${API_URL}/api/chargers`)
       .then((res) => res.json())
       .then((data) => setChargers(data))
       .catch((err) => console.error(err));
   };
 
   const fetchReservations = () => {
-    fetch('http://localhost:3001/api/reservations')
+    fetch(`${API_URL}/api/reservations`)
       .then((res) => res.json())
       .then((data) => setReservations(data))
       .catch((err) => console.error(err));
   };
 
   const fetchUsers = () => {
-    fetch('http://localhost:3001/api/users')
+    fetch(`${API_URL}/api/users`)
       .then((res) => res.json())
       .then((data) => setUsers(data))
       .catch((err) => console.error(err));
@@ -74,7 +75,7 @@ function App() {
     }, 1000);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [API_URL]);
 
   function formatTime(ms) {
     if (ms < 0) ms = 0;
@@ -95,7 +96,7 @@ function App() {
       return;
     }
 
-    fetch('http://localhost:3001/api/reservations', {
+    fetch(`${API_URL}/api/reservations`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ userId: parseInt(userId, 10) }),
@@ -119,7 +120,7 @@ function App() {
   };
 
   const handleStartReservation = (id) => {
-    fetch(`http://localhost:3001/api/reservations/${id}/start`, {
+    fetch(`${API_URL}/api/reservations/${id}/start`, {
       method: 'PATCH',
     })
       .then((res) => res.json())
@@ -136,7 +137,7 @@ function App() {
   };
 
   const handleCompleteReservation = (id) => {
-    fetch(`http://localhost:3001/api/reservations/${id}/complete`, {
+    fetch(`${API_URL}/api/reservations/${id}/complete`, {
       method: 'PATCH',
     })
       .then((res) => res.json())
@@ -153,7 +154,7 @@ function App() {
   };
 
   const handleCancelReservation = (id) => {
-    fetch(`http://localhost:3001/api/reservations/${id}/cancel`, {
+    fetch(`${API_URL}/api/reservations/${id}/cancel`, {
       method: 'PATCH',
     })
       .then((res) => res.json())
@@ -212,7 +213,7 @@ function App() {
         {alertMsg && (
           <div
             className={`
-              fixed inset-0 z-50 flex items-center justify-center 
+              fixed inset-0 z-50 flex items-center justify-center
               bg-black bg-opacity-50
               transition-opacity duration-500
               ${isFading ? 'opacity-0' : 'opacity-100'}
@@ -223,7 +224,6 @@ function App() {
                 {alertTitle}
               </h2>
               <div className='text-gray-700 mb-4'>{alertMsg}</div>
-
               <button
                 onClick={dismissModal}
                 className='bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600'
