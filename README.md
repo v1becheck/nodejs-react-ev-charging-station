@@ -30,6 +30,7 @@ Start Frontend:
 # Considerations for improvement
 
 - Login sessions using JWT
+- Store user data in a database to persist data over page refreshes
 
 # Tech stack
 
