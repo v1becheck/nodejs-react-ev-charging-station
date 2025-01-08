@@ -44,21 +44,21 @@ export default function App() {
 
   const {
     data: chargers,
-    loading: chargersLoading,
+    // loading: chargersLoading,
     error: chargersError,
     refetch: fetchChargers,
   } = useFetchData(`${API_URL}/api/chargers`);
 
   const {
     data: reservations,
-    loading: reservationsLoading,
+    // loading: reservationsLoading,s
     error: reservationsError,
     refetch: fetchReservations,
   } = useFetchData(`${API_URL}/api/reservations`);
 
   const {
     data: users,
-    loading: usersLoading,
+    // loading: usersLoading,
     error: usersError,
     refetch: fetchUsers,
   } = useFetchData(`${API_URL}/api/users`);
@@ -136,7 +136,6 @@ export default function App() {
             Chargers, Reservations, and Users
           </p>
         </header>
-
         {chargersError && (
           <div className='text-red-500 mb-2'>
             Error loading chargers: {chargersError}
@@ -152,38 +151,34 @@ export default function App() {
             Error loading users: {usersError}
           </div>
         )}
-
         {/* CHARGERS TABLE */}
-        {chargersLoading ? (
+        {/* {chargersLoading ? (
           <p className='text-center mb-6'>Loading chargers...</p>
-        ) : (
-          <ChargersTable
-            chargers={chargers || []}
-            reservations={reservations || []}
-            now={now}
-          />
-        )}
-
+        ) : ( */}
+        <ChargersTable
+          chargers={chargers || []}
+          reservations={reservations || []}
+          now={now}
+        />
+        {/* )} */}
         {/* RESERVATIONS TABLE */}
-        {reservationsLoading ? (
+        {/* {reservationsLoading ? (
           <p className='text-center mb-6'>Loading reservations...</p>
-        ) : (
-          <ReservationsTable
-            reservations={reservations || []}
-            fetchReservations={fetchReservations}
-            fetchChargers={fetchChargers}
-            showAlert={showAlert}
-            API_URL={API_URL}
-          />
-        )}
-
+        ) : ( */}
+        <ReservationsTable
+          reservations={reservations || []}
+          fetchReservations={fetchReservations}
+          fetchChargers={fetchChargers}
+          showAlert={showAlert}
+          API_URL={API_URL}
+        />
+        {/* )} */}
         {/* USERS TABLE */}
-        {usersLoading ? (
+        {/* {usersLoading ? (
           <p className='text-center mb-6'>Loading users...</p>
-        ) : (
-          <UsersTable users={users || []} fetchUsers={fetchUsers} />
-        )}
-
+        ) : ( */}
+        <UsersTable users={users || []} fetchUsers={fetchUsers} />
+        {/* )} */}
         {/* CREATE NEW RESERVATION */}
         <section className='mb-8 bg-white shadow rounded p-4'>
           <h2 className='text-xl font-semibold mb-2'>Create New Reservation</h2>
