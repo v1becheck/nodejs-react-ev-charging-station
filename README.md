@@ -37,6 +37,7 @@ Start Frontend:
 - Node.js/Express
 - React
 - Tailwind
+- Sqlite3
 
 # Deployed
 
